@@ -2,15 +2,26 @@ import java.util.Scanner;
 
 public class Penguin {
     public static void main(String[] args) {
-        System.out.println("Hello! I'm Penguin \nWhat can I do for you?");
-        System.out.println("Bye. Hope to see you again soon!");
         Scanner scanner = new Scanner(System.in);
-        String str = scanner.nextLine();
+        System.out.println("____________________________________________________________");
+        System.out.println(" Hello! I'm Penguin");
+        System.out.println(" What can I do for you?");
+        System.out.println("____________________________________________________________");
 
-        if (str != "bye") {
-            System.out.println(str);
-        } else if (str == "bye") {
-            System.out.println("Bye. Hope to see you again soon!");
+        while (true) {
+            String str = scanner.nextLine();
+            if (str.equals("bye")) {
+                System.out.println("____________________________________________________________");
+                System.out.println(" Bye. Hope to see you again soon!");
+                System.out.println("____________________________________________________________");
+                break;
+            } else {
+                System.out.println("____________________________________________________________");
+                System.out.println(" " + str);
+                System.out.println("____________________________________________________________");
+            }
         }
+
+        scanner.close();
     }
 }
