@@ -1,15 +1,16 @@
+import java.util.Scanner;
+
 public class Penguin {
     public static void main(String[] args) {
-        /*
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-        */
-
         System.out.println("Hello! I'm Penguin \nWhat can I do for you?");
         System.out.println("Bye. Hope to see you again soon!");
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.nextLine();
+
+        if (str != "bye") {
+            System.out.println(str);
+        } else if (str == "bye") {
+            System.out.println("Bye. Hope to see you again soon!");
+        }
     }
 }
