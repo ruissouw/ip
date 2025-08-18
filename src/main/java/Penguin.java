@@ -22,7 +22,7 @@ public class Penguin {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < curr; i++) {
                     Task task = lst[i];
-                    System.out.println(String.format("%d.[%s] %s", i + 1, task.getStatusIcon(), task.getDescription()));
+                    System.out.println(String.format("%d.%s", i + 1, task));
                 }
                 System.out.println("____________________________________________________________");
             } else if (str.contains("mark") || str.contains("unmark")) {
@@ -44,10 +44,22 @@ public class Penguin {
                 System.out.println(String.format("[%s] %s", task.getStatusIcon(), task.getDescription()));
                 System.out.println("____________________________________________________________");
             } else {
-                lst[curr] = new Task(str);
-                curr++;
+                String[] split = str.split(" ", 2);
+                if (split[0].equals("todo")) {
+                    lst[curr] = new Todo(split[1]);
+                } else if (split[0].equals("deadline")) {
+                    String[] split2 = split[1].split("/by");
+                    lst[curr] = new Deadline(split2[0], split2[1]);
+                } else if (split[0].equals("event")) {
+                    String[] split2 = split[1].split("/from");
+                    String[] split3 = split2[1].split("/to");
+                    lst[curr] = new Event(split2[0], split3[0], split3[1]);
+                }
                 System.out.println("____________________________________________________________");
-                System.out.println("added: " + str);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(lst[curr]);
+                curr++;
+                System.out.println(String.format("Now you have %d tasks in the list.", curr));
                 System.out.println("____________________________________________________________");
             }
         }
