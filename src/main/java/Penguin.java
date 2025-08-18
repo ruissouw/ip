@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class Penguin {
     public static void main(String[] args) {
+        int curr = 0;
+        String[] lst = new String[100];
         Scanner scanner = new Scanner(System.in);
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Penguin");
@@ -15,9 +17,17 @@ public class Penguin {
                 System.out.println(" Bye. Hope to see you again soon!");
                 System.out.println("____________________________________________________________");
                 break;
-            } else {
+            } else if (str.equals("list")) {
                 System.out.println("____________________________________________________________");
-                System.out.println(" " + str);
+                for (int i = 0; i < curr; i++) {
+                    System.out.println(String.format("%d. %s", i + 1, lst[i]));
+                }
+                System.out.println("____________________________________________________________");
+            } else {
+                lst[curr] = str;
+                curr++;
+                System.out.println("____________________________________________________________");
+                System.out.println("added: " + str);
                 System.out.println("____________________________________________________________");
             }
         }
