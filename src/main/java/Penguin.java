@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Penguin {
     public static void main(String[] args) {
@@ -25,6 +24,24 @@ public class Penguin {
                     Task task = lst[i];
                     System.out.println(String.format("%d.[%s] %s", i + 1, task.getStatusIcon(), task.getDescription()));
                 }
+                System.out.println("____________________________________________________________");
+            } else if (str.contains("mark") || str.contains("unmark")) {
+                String[] split = str.split(" ");
+                int idx = Integer.parseInt(split[1]) - 1;
+                Task task = lst[idx];
+
+                String msg = "";
+                if (split[0].equals("mark")) {
+                    task.markAsDone();
+                    msg = "Nice! I've marked this task as done:";
+                } else if (split[0].equals("unmark")) {
+                    task.markAsUndone();
+                    msg = "OK, I've marked this task as not done yet:";
+                }
+
+                System.out.println("____________________________________________________________");
+                System.out.println(msg);
+                System.out.println(String.format("[%s] %s", task.getStatusIcon(), task.getDescription()));
                 System.out.println("____________________________________________________________");
             } else {
                 lst[curr] = new Task(str);
