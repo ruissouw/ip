@@ -1,9 +1,12 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Penguin {
     public static void main(String[] args) {
         int curr = 0;
         String[] lst = new String[100];
+        Boolean[] statuses = new Boolean[100];
+        Arrays.fill(statuses, false);
         Scanner scanner = new Scanner(System.in);
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Penguin");
@@ -19,8 +22,10 @@ public class Penguin {
                 break;
             } else if (str.equals("list")) {
                 System.out.println("____________________________________________________________");
+                System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < curr; i++) {
-                    System.out.println(String.format("%d. %s", i + 1, lst[i]));
+                    String status = statuses[curr] ? "X" : " ";
+                    System.out.println(String.format("%d.[%s] %s", i + 1, status, lst[i]));
                 }
                 System.out.println("____________________________________________________________");
             } else {
