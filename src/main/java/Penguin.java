@@ -4,9 +4,7 @@ import java.util.Arrays;
 public class Penguin {
     public static void main(String[] args) {
         int curr = 0;
-        String[] lst = new String[100];
-        Boolean[] statuses = new Boolean[100];
-        Arrays.fill(statuses, false);
+        Task[] lst = new Task[100];
         Scanner scanner = new Scanner(System.in);
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Penguin");
@@ -24,12 +22,12 @@ public class Penguin {
                 System.out.println("____________________________________________________________");
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < curr; i++) {
-                    String status = statuses[curr] ? "X" : " ";
-                    System.out.println(String.format("%d.[%s] %s", i + 1, status, lst[i]));
+                    Task task = lst[i];
+                    System.out.println(String.format("%d.[%s] %s", i + 1, task.getStatusIcon(), task.getDescription()));
                 }
                 System.out.println("____________________________________________________________");
             } else {
-                lst[curr] = str;
+                lst[curr] = new Task(str);
                 curr++;
                 System.out.println("____________________________________________________________");
                 System.out.println("added: " + str);
