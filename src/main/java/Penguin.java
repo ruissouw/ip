@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Penguin {
     public static void main(String[] args) {
         int curr = 0;
-        Task[] lst = new Task[100];
+        ArrayList<Task> tasks = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Penguin");
@@ -21,14 +22,14 @@ public class Penguin {
                 System.out.println("____________________________________________________________");
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < curr; i++) {
-                    Task task = lst[i];
+                    Task task = tasks.get(i);
                     System.out.println(String.format("%d.%s", i + 1, task));
                 }
                 System.out.println("____________________________________________________________");
             } else if (str.contains("mark") || str.contains("unmark")) {
                 String[] split = str.split(" ");
                 int idx = Integer.parseInt(split[1]) - 1;
-                Task task = lst[idx];
+                Task task = tasks.get(idx);
 
                 String msg = "";
                 if (split[0].equals("mark")) {
@@ -55,25 +56,25 @@ public class Penguin {
                         if (split.length == 1 || split[1].trim().isEmpty()) {
                             throw new PenguinException("todo");
                         }
-                        lst[curr] = new Todo(split[1]);
+                        tasks.add(new Todo(split[1]));
                     } else if (split[0].equals("deadline")) {
                         if (split.length == 1 || split[1].trim().isEmpty()) {
                             throw new PenguinException("deadline");
                         }
                         String[] split2 = split[1].split("/by");
-                        lst[curr] = new Deadline(split2[0].trim(), split2[1].trim());
+                        tasks.add(new Deadline(split2[0].trim(), split2[1].trim()));
                     } else if (split[0].equals("event")) {
                         if (split.length == 1 || split[1].trim().isEmpty()) {
                             throw new PenguinException("event");
                         }
                         String[] split2 = split[1].split("/from");
                         String[] split3 = split2[1].split("/to");
-                        lst[curr] = new Event(split2[0].trim(), split3[0].trim(), split3[1].trim());
+                        tasks.add(new Event(split2[0].trim(), split3[0].trim(), split3[1].trim()));
                     }
 
                     System.out.println("____________________________________________________________");
                     System.out.println("Got it. I've added this task:");
-                    System.out.println(lst[curr]);
+                    System.out.println(tasks.get(curr));
                     curr++;
                     System.out.println("Now you have " + curr + " tasks in the list.");
                     System.out.println("____________________________________________________________");
