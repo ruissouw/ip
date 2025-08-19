@@ -10,7 +10,7 @@ public class Penguin {
         System.out.println(" What can I do for you?");
         System.out.println("____________________________________________________________");
 
-        while (true) {
+        while (scanner.hasNextLine()) {
             String str = scanner.nextLine();
             if (str.equals("bye")) {
                 System.out.println("____________________________________________________________");
