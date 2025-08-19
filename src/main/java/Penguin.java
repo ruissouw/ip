@@ -2,6 +2,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Penguin {
+    public enum TaskType {
+        TODO,
+        DEADLINE,
+        EVENT;
+
+        public static TaskType convert(String str) throws PenguinException {
+            switch (str.toLowerCase()) {
+                case "todo": return TODO;
+                case "deadline": return DEADLINE;
+                case "event": return EVENT;
+                default: throw new PenguinException(str);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int curr = 0;
         ArrayList<Task> tasks = new ArrayList<>();
@@ -58,29 +73,32 @@ public class Penguin {
             } else {
                 try {
                     String[] split = str.split(" ", 2);
+                    TaskType taskType = TaskType.convert(split[0]);
 
-                    if (!split[0].equals("todo") && !split[0].equals("deadline") && !split[0].equals("event")) {
-                        throw new PenguinException(split[0]);
-                    }
+                    switch (taskType) {
+                        case TODO:
+                            if (split.length == 1 || split[1].trim().isEmpty()) {
+                                throw new PenguinException("todo");
+                            }
+                            tasks.add(new Todo(split[1].trim()));
+                            break;
 
-                    if (split[0].equals("todo")) {
-                        if (split.length == 1 || split[1].trim().isEmpty()) {
-                            throw new PenguinException("todo");
-                        }
-                        tasks.add(new Todo(split[1]));
-                    } else if (split[0].equals("deadline")) {
-                        if (split.length == 1 || split[1].trim().isEmpty()) {
-                            throw new PenguinException("deadline");
-                        }
-                        String[] split2 = split[1].split("/by");
-                        tasks.add(new Deadline(split2[0].trim(), split2[1].trim()));
-                    } else if (split[0].equals("event")) {
-                        if (split.length == 1 || split[1].trim().isEmpty()) {
-                            throw new PenguinException("event");
-                        }
-                        String[] split2 = split[1].split("/from");
-                        String[] split3 = split2[1].split("/to");
-                        tasks.add(new Event(split2[0].trim(), split3[0].trim(), split3[1].trim()));
+                        case DEADLINE:
+                            if (split.length == 1 || split[1].trim().isEmpty()) {
+                                throw new PenguinException("deadline");
+                            }
+                            String[] split2 = split[1].split("/by", 2);
+                            tasks.add(new Deadline(split2[0].trim(), split2[1].trim()));
+                            break;
+
+                        case EVENT:
+                            if (split.length == 1 || split[1].trim().isEmpty()) {
+                                throw new PenguinException("event");
+                            }
+                            String[] split3 = split[1].split("/from", 2);
+                            String[] split4 = split3[1].split("/to", 2);
+                            tasks.add(new Event(split3[0].trim(), split4[0].trim(), split4[1].trim()));
+                            break;
                     }
 
                     System.out.println("____________________________________________________________");
