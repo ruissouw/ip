@@ -44,26 +44,45 @@ public class Penguin {
                 System.out.println(String.format("%s %s", task.getStatusIcon(), task.getDescription()));
                 System.out.println("____________________________________________________________");
             } else {
-                String[] split = str.split(" ", 2);
-                if (split[0].equals("todo")) {
-                    lst[curr] = new Todo(split[1]);
-                } else if (split[0].equals("deadline")) {
-                    String[] split2 = split[1].split("/by");
-                    lst[curr] = new Deadline(split2[0], split2[1]);
-                } else if (split[0].equals("event")) {
-                    String[] split2 = split[1].split("/from");
-                    String[] split3 = split2[1].split("/to");
-                    lst[curr] = new Event(split2[0], split3[0], split3[1]);
+                try {
+                    String[] split = str.split(" ", 2);
+
+                    if (!split[0].equals("todo") && !split[0].equals("deadline") && !split[0].equals("event")) {
+                        throw new PenguinException(split[0]);
+                    }
+
+                    if (split[0].equals("todo")) {
+                        if (split.length == 1 || split[1].trim().isEmpty()) {
+                            throw new PenguinException("todo");
+                        }
+                        lst[curr] = new Todo(split[1]);
+                    } else if (split[0].equals("deadline")) {
+                        if (split.length == 1 || split[1].trim().isEmpty()) {
+                            throw new PenguinException("deadline");
+                        }
+                        String[] split2 = split[1].split("/by");
+                        lst[curr] = new Deadline(split2[0].trim(), split2[1].trim());
+                    } else if (split[0].equals("event")) {
+                        if (split.length == 1 || split[1].trim().isEmpty()) {
+                            throw new PenguinException("event");
+                        }
+                        String[] split2 = split[1].split("/from");
+                        String[] split3 = split2[1].split("/to");
+                        lst[curr] = new Event(split2[0].trim(), split3[0].trim(), split3[1].trim());
+                    }
+
+                    System.out.println("____________________________________________________________");
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(lst[curr]);
+                    curr++;
+                    System.out.println("Now you have " + curr + " tasks in the list.");
+                    System.out.println("____________________________________________________________");
+
+                } catch (PenguinException pe) {
+                    System.out.println(pe);
                 }
-                System.out.println("____________________________________________________________");
-                System.out.println("Got it. I've added this task:");
-                System.out.println(lst[curr]);
-                curr++;
-                System.out.println(String.format("Now you have %d tasks in the list.", curr));
-                System.out.println("____________________________________________________________");
             }
         }
-
         scanner.close();
     }
 }
