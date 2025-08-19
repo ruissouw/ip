@@ -41,7 +41,7 @@ public class Penguin {
 
                 System.out.println("____________________________________________________________");
                 System.out.println(msg);
-                System.out.println(String.format("[%s] %s", task.getStatusIcon(), task.getDescription()));
+                System.out.println(String.format("%s %s", task.getStatusIcon(), task.getDescription()));
                 System.out.println("____________________________________________________________");
             } else {
                 String[] split = str.split(" ", 2);
