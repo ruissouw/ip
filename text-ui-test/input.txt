@@ -7,4 +7,5 @@ unmark 1
 list
 todo
 djsksjkdsjk
+delete 1
 bye
