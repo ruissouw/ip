@@ -44,6 +44,17 @@ public class Penguin {
                 System.out.println(msg);
                 System.out.println(String.format("%s %s", task.getStatusIcon(), task.getDescription()));
                 System.out.println("____________________________________________________________");
+            } else if (str.contains("delete")) {
+                String[] split = str.split(" ");
+                int idx = Integer.parseInt(split[1]) - 1;
+                Task task = tasks.remove(idx);
+                curr--;
+
+                System.out.println("____________________________________________________________");
+                System.out.println("Noted. I've removed this task:");
+                System.out.println(task);
+                System.out.println("Now you have " + curr + " tasks in the list.");
+                System.out.println("____________________________________________________________");
             } else {
                 try {
                     String[] split = str.split(" ", 2);
