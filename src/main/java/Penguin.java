@@ -1,7 +1,16 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.io.FileWriter;
+
 
 public class Penguin {
+    private static final String FILE_PATH = "./data/penguin.txt";
+    private static List<Task> tasks = new ArrayList<>();
+
     public enum TaskType {
         TODO,
         DEADLINE,
@@ -17,9 +26,57 @@ public class Penguin {
         }
     }
 
+    private static void readFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            String[] split = s.nextLine().split(" \\| ");
+            Task task = null;
+            if (split[0].equals("T")) {
+                task = new Todo(split[2]);
+            } else if (split[0].equals("D")) {
+                task = new Deadline(split[2], split[3]);
+            } else if (split[0].equals("E")) {
+                task = new Event(split[2], split[3], split[4]);
+            }
+
+            if (split[1].equals("[X]")) {
+                task.markAsDone();
+            }
+            tasks.add(task);
+        }
+    }
+
+    private static void writeAllTasks(String filePath, List<Task> tasks) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        for (Task task : tasks) {
+            String line = null;
+            if (task instanceof Todo) {
+                line = "T | " + task.getStatusIcon() + " | " + task.getDescription();
+            } else if (task instanceof Deadline) {
+                line = "D | " + task.getStatusIcon() + " | " + task.getDescription()
+                        + " | " + ((Deadline) task).getDeadline();
+            } else if (task instanceof Event) {
+                line = "E | " + task.getStatusIcon() + " | " + task.getDescription()
+                        + " | " + ((Event) task).getStart() + " | " + ((Event) task).getEnd();
+            }
+            fw.write(line + System.lineSeparator());
+        }
+        fw.close();
+    }
+
     public static void main(String[] args) {
-        int curr = 0;
-        ArrayList<Task> tasks = new ArrayList<>();
+        try {
+            readFileContents(FILE_PATH);
+        } catch (FileNotFoundException e) {
+            new File("./data").mkdirs();
+            try {
+                new File(FILE_PATH).createNewFile();
+            } catch (IOException io) {
+                System.out.println("Unable to create file: " + io.getMessage());
+            }
+        }
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Penguin");
@@ -29,6 +86,11 @@ public class Penguin {
         while (scanner.hasNextLine()) {
             String str = scanner.nextLine();
             if (str.equals("bye")) {
+                try {
+                    writeAllTasks(FILE_PATH, tasks);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
                 System.out.println("____________________________________________________________");
                 System.out.println(" Bye. Hope to see you again soon!");
                 System.out.println("____________________________________________________________");
@@ -36,7 +98,7 @@ public class Penguin {
             } else if (str.equals("list")) {
                 System.out.println("____________________________________________________________");
                 System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < curr; i++) {
+                for (int i = 0; i < tasks.size(); i++) {
                     Task task = tasks.get(i);
                     System.out.println(String.format("%d.%s", i + 1, task));
                 }
@@ -63,12 +125,11 @@ public class Penguin {
                 String[] split = str.split(" ");
                 int idx = Integer.parseInt(split[1]) - 1;
                 Task task = tasks.remove(idx);
-                curr--;
 
                 System.out.println("____________________________________________________________");
                 System.out.println("Noted. I've removed this task:");
                 System.out.println(task);
-                System.out.println("Now you have " + curr + " tasks in the list.");
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             } else {
                 try {
@@ -103,9 +164,8 @@ public class Penguin {
 
                     System.out.println("____________________________________________________________");
                     System.out.println("Got it. I've added this task:");
-                    System.out.println(tasks.get(curr));
-                    curr++;
-                    System.out.println("Now you have " + curr + " tasks in the list.");
+                    System.out.println(tasks.get(tasks.size() - 1));
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     System.out.println("____________________________________________________________");
 
                 } catch (PenguinException pe) {
