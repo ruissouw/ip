@@ -8,9 +8,8 @@ public class Event extends Task {
 
     public Event(String description, String start, String end) {
         super(description);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-        this.start = LocalDateTime.parse(start, formatter);
-        this.end = LocalDateTime.parse(end, formatter);
+        this.start = LocalDateTime.parse(start);
+        this.end = LocalDateTime.parse(end);
     }
 
     public LocalDateTime getStart() {

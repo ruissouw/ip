@@ -6,8 +6,7 @@ public class Deadline extends Task {
 
     public Deadline(String description, String by) {
         super(description);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-        this.by = LocalDateTime.parse(by, formatter);
+        this.by = LocalDateTime.parse(by);
     }
 
     public LocalDateTime getDeadline() {
