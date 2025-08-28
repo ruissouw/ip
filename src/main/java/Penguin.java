@@ -8,9 +8,9 @@ import java.io.FileWriter;
 
 
 public class Penguin {
-    private static final String FILE_PATH = "./data/penguin.txt";
     private static List<Task> tasks = new ArrayList<>();
     private static Ui ui = new Ui();
+    private static Storage storage = new Storage();
 
     public enum TaskType {
         TODO,
@@ -27,6 +27,7 @@ public class Penguin {
         }
     }
 
+    /*
     private static void readFileContents(String filePath) throws FileNotFoundException {
         File f = new File(filePath);
         Scanner s = new Scanner(f);
@@ -65,29 +66,31 @@ public class Penguin {
         }
         fw.close();
     }
+     */
 
     public static void main(String[] args) {
         try {
-            readFileContents(FILE_PATH);
+            storage.readFileContents(tasks);
         } catch (FileNotFoundException e) {
-            new File("./data").mkdirs();
+            // new File("./data").mkdirs();
+            storage.createFolder();
             try {
-                new File(FILE_PATH).createNewFile();
+                // new File(FILE_PATH).createNewFile();
+                storage.createFile();
             } catch (IOException io) {
-                System.out.println("Unable to create file: " + io.getMessage());
+                ui.printErrorMessage("Unable to create file: " + io.getMessage());
             }
         }
 
-        Scanner scanner = new Scanner(System.in);
         ui.sayWelcome();
 
         while (true) {
             String str = ui.readLine();
             if (str.equals("bye")) {
                 try {
-                    writeAllTasks(FILE_PATH, tasks);
+                    storage.writeAllTasks(tasks);
                 } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                    ui.printErrorMessage(e.getMessage());
                 }
                 ui.sayGoodbye();
                 break;
@@ -143,7 +146,7 @@ public class Penguin {
                     }
                     ui.addTask(tasks.size(), tasks.get(tasks.size() - 1));
                 } catch (PenguinException pe) {
-                    System.out.println(pe);
+                    ui.printErrorMessage(pe.toString());
                 }
             }
         }
