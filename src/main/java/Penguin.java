@@ -137,29 +137,29 @@ public class Penguin {
                     TaskType taskType = TaskType.convert(split[0]);
 
                     switch (taskType) {
-                        case TODO:
-                            if (split.length == 1 || split[1].trim().isEmpty()) {
-                                throw new PenguinException("todo");
-                            }
-                            tasks.add(new Todo(split[1].trim()));
-                            break;
+                    case TODO:
+                        if (split.length == 1 || split[1].trim().isEmpty()) {
+                            throw new PenguinException("todo");
+                        }
+                        tasks.add(new Todo(split[1].trim()));
+                        break;
 
-                        case DEADLINE:
-                            if (split.length == 1 || split[1].trim().isEmpty()) {
-                                throw new PenguinException("deadline");
-                            }
-                            String[] split2 = split[1].split("/by", 2);
-                            tasks.add(new Deadline(split2[0].trim(), split2[1].trim()));
-                            break;
+                    case DEADLINE:
+                        if (split.length == 1 || split[1].trim().isEmpty()) {
+                            throw new PenguinException("deadline");
+                        }
+                        String[] split2 = split[1].split("/by", 2);
+                        tasks.add(new Deadline(split2[0].trim(), split2[1].trim()));
+                        break;
 
-                        case EVENT:
-                            if (split.length == 1 || split[1].trim().isEmpty()) {
-                                throw new PenguinException("event");
-                            }
-                            String[] split3 = split[1].split("/from", 2);
-                            String[] split4 = split3[1].split("/to", 2);
-                            tasks.add(new Event(split3[0].trim(), split4[0].trim(), split4[1].trim()));
-                            break;
+                    case EVENT:
+                        if (split.length == 1 || split[1].trim().isEmpty()) {
+                            throw new PenguinException("event");
+                        }
+                        String[] split3 = split[1].split("/from", 2);
+                        String[] split4 = split3[1].split("/to", 2);
+                        tasks.add(new Event(split3[0].trim(), split4[0].trim(), split4[1].trim()));
+                        break;
                     }
 
                     System.out.println("____________________________________________________________");
