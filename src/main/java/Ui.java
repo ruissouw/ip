@@ -72,4 +72,8 @@ public class Ui {
         System.out.println("Now you have " + totalTasks + " tasks in the list.");
         printLine();
     }
+
+    public void printErrorMessage(String msg) {
+        System.out.println(msg);
+    }
 }
