@@ -10,6 +10,7 @@ import java.io.FileWriter;
 public class Penguin {
     private static final String FILE_PATH = "./data/penguin.txt";
     private static List<Task> tasks = new ArrayList<>();
+    private static Ui ui = new Ui();
 
     public enum TaskType {
         TODO,
@@ -78,31 +79,20 @@ public class Penguin {
         }
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("____________________________________________________________");
-        System.out.println(" Hello! I'm Penguin");
-        System.out.println(" What can I do for you?");
-        System.out.println("____________________________________________________________");
+        ui.sayWelcome();
 
-        while (scanner.hasNextLine()) {
-            String str = scanner.nextLine();
+        while (true) {
+            String str = ui.readLine();
             if (str.equals("bye")) {
                 try {
                     writeAllTasks(FILE_PATH, tasks);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
-                System.out.println("____________________________________________________________");
-                System.out.println(" Bye. Hope to see you again soon!");
-                System.out.println("____________________________________________________________");
+                ui.sayGoodbye();
                 break;
             } else if (str.equals("list")) {
-                System.out.println("____________________________________________________________");
-                System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < tasks.size(); i++) {
-                    Task task = tasks.get(i);
-                    System.out.println(String.format("%d.%s", i + 1, task));
-                }
-                System.out.println("____________________________________________________________");
+                ui.printList(tasks);
             } else if (str.contains("mark") || str.contains("unmark")) {
                 String[] split = str.split(" ");
                 int idx = Integer.parseInt(split[1]) - 1;
@@ -111,26 +101,16 @@ public class Penguin {
                 String msg = "";
                 if (split[0].equals("mark")) {
                     task.markAsDone();
-                    msg = "Nice! I've marked this task as done:";
+                    ui.markTask(task);
                 } else if (split[0].equals("unmark")) {
                     task.markAsUndone();
-                    msg = "OK, I've marked this task as not done yet:";
+                    ui.unmarkTask(task);
                 }
-
-                System.out.println("____________________________________________________________");
-                System.out.println(msg);
-                System.out.println(String.format("%s %s", task.getStatusIcon(), task.getDescription()));
-                System.out.println("____________________________________________________________");
             } else if (str.contains("delete")) {
                 String[] split = str.split(" ");
                 int idx = Integer.parseInt(split[1]) - 1;
                 Task task = tasks.remove(idx);
-
-                System.out.println("____________________________________________________________");
-                System.out.println("Noted. I've removed this task:");
-                System.out.println(task);
-                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-                System.out.println("____________________________________________________________");
+                ui.deleteTask(tasks.size(), task);
             } else {
                 try {
                     String[] split = str.split(" ", 2);
@@ -161,18 +141,12 @@ public class Penguin {
                         tasks.add(new Event(split3[0].trim(), split4[0].trim(), split4[1].trim()));
                         break;
                     }
-
-                    System.out.println("____________________________________________________________");
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(tasks.get(tasks.size() - 1));
-                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-                    System.out.println("____________________________________________________________");
-
+                    ui.addTask(tasks.size(), tasks.get(tasks.size() - 1));
                 } catch (PenguinException pe) {
                     System.out.println(pe);
                 }
             }
         }
-        scanner.close();
+        ui.close();
     }
 }
