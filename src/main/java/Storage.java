@@ -17,9 +17,10 @@ public class Storage {
         new File(FILE_PATH).createNewFile();
     }
 
-    public void readFileContents(List<Task> tasks) throws FileNotFoundException {
+    public List<Task> load() throws FileNotFoundException {
         File file = new File(FILE_PATH);
         Scanner s = new Scanner(file);
+        List<Task> tasks = new ArrayList<>();
 
         while (s.hasNext()) {
             String[] split = s.nextLine().split(" \\| ");
@@ -37,6 +38,7 @@ public class Storage {
             }
             tasks.add(task);
         }
+        return tasks;
     }
 
     public void writeAllTasks(List<Task> tasks) throws IOException {
