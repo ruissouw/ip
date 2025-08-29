@@ -1,3 +1,5 @@
+package penguin;
+
 public class PenguinException extends Exception {
     private final String errorType;
 
