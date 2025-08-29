@@ -13,12 +13,14 @@ public class Event extends Task {
         this.end = LocalDateTime.parse(end, formatter);
     }
 
-    public LocalDateTime getStart() {
-        return this.start;
+    public String getStart() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        return this.start.format(formatter);
     }
 
-    public LocalDateTime getEnd() {
-        return this.end;
+    public String getEnd() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        return this.end.format(formatter);
     }
 
     @Override
