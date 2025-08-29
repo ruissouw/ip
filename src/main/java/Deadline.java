@@ -10,8 +10,9 @@ public class Deadline extends Task {
         this.by = LocalDateTime.parse(by, formatter);
     }
 
-    public LocalDateTime getDeadline() {
-        return this.by;
+    public String getDeadline() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        return this.by.format(formatter);
     }
 
     @Override
