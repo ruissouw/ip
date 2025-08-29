@@ -1,3 +1,5 @@
+package penguin;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +24,7 @@ public class Ui {
 
     public void sayWelcome() {
         printLine();
-        System.out.println(" Hello! I'm Penguin");
+        System.out.println(" Hello! I'm penguin.Penguin");
         System.out.println(" What can I do for you?");
         printLine();
     }
