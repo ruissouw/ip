@@ -5,10 +5,13 @@ import java.util.ArrayList;
 
 public class Penguin {
     private static TaskList tasks;
-    private static Ui ui = new Ui();
-    private static Storage storage = new Storage();
+    private static Ui ui;
+    private static Storage storage;
 
-    public static void main(String[] args) {
+    public Penguin() {
+        ui = new Ui();
+        storage = new Storage();
+
         try {
             tasks = new TaskList(storage.load());
         } catch (FileNotFoundException e) {
@@ -21,7 +24,9 @@ public class Penguin {
                 tasks = new TaskList(new ArrayList<>());
             }
         }
+    }
 
+    public void run() {
         ui.sayWelcome();
 
         boolean isOngoing = true;
@@ -30,5 +35,9 @@ public class Penguin {
             isOngoing = Parser.parse(str, tasks, ui, storage);
         }
         ui.close();
+    }
+
+    public static void main(String[] args) {
+        new Penguin().run();
     }
 }
