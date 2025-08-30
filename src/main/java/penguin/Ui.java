@@ -35,9 +35,9 @@ public class Ui {
         printLine();
     }
 
-    public void printList(List<Task> tasks) {
+    public void printList(List<Task> tasks, String msg) {
         printLine();
-        System.out.println("Here are the tasks in your list:");
+        System.out.println(msg);
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
             System.out.println(String.format("%d.%s", i + 1, task));

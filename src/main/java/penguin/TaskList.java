@@ -1,5 +1,6 @@
 package penguin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskList {
@@ -35,5 +36,15 @@ public class TaskList {
 
     public void markAsUndone(int idx) {
         tasks.get(idx).markAsUndone();
+    }
+
+    public List<Task> findTasks(String keyword) {
+        ArrayList<Task> filtered = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
+                filtered.add(task);
+            }
+        }
+        return filtered;
     }
 }
