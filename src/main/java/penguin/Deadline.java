@@ -3,6 +3,9 @@ package penguin;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Deadline tasks have a deadline that the task needs to be done by
+ */
 public class Deadline extends Task {
     protected LocalDateTime by;
 
@@ -12,6 +15,10 @@ public class Deadline extends Task {
         this.by = LocalDateTime.parse(by, formatter);
     }
 
+    /**
+     * Returns the deadline
+     * @return deadline in string format
+     */
     public String getDeadline() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return this.by.format(formatter);
