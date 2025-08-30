@@ -8,17 +8,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Class in charge of reading and writing file data
+ */
 public class Storage {
     private static final String FILE_PATH = "./data/penguin.txt";
 
+    /**
+     * Creates a folder called data
+     */
     public void createFolder() {
         new File("./data").mkdirs();
     }
 
+    /**
+     * Creates a file called "penguin.txt"
+     * @throws IOException
+     */
     public void createFile() throws IOException {
         new File(FILE_PATH).createNewFile();
     }
 
+    /**
+     * Tries to read the file and load a list of tasks
+     * @return List of Tasks
+     * @throws FileNotFoundException
+     */
     public List<Task> load() throws FileNotFoundException {
         File file = new File(FILE_PATH);
         Scanner s = new Scanner(file);
@@ -43,6 +58,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Writes the tasks to the file
+     * @param tasks tasks to be saved
+     * @throws IOException
+     */
     public void writeAllTasks(List<Task> tasks) throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH);
         for (Task task : tasks) {

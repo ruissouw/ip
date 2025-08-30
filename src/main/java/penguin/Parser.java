@@ -3,6 +3,9 @@ package penguin;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Interprets and processes user commands
+ */
 public class Parser {
     public enum TaskType {
         TODO,
@@ -19,6 +22,26 @@ public class Parser {
         }
     }
 
+    /**
+     * Renders different actions depending on user command
+     * <p>
+     * User commands:
+     * <ul>
+     *     <li>Bye: exits the program and in doing so save all tasks in storage and say goodbye</li>
+     *     <li>List: prints list of tasks</li>
+     *     <li>mark/unmark: mark/unmark the task</li>
+     *     <li>delete: delete the task</li>
+     *     <li>
+     *         rest: if name of task specified, create the corresponding task
+     *         else, print error message
+     *     </li>
+     * </ul>
+     * @param str User command
+     * @param tasks TaskList
+     * @param ui the UI object
+     * @param storage the Storage object
+     * @return whether to exit the program
+     */
     public static boolean parse(String str, TaskList tasks, Ui ui, Storage storage) {
         if (str.equals("bye")) {
             try {
