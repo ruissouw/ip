@@ -1,5 +1,8 @@
 package penguin;
 
+/**
+ * The most basic task with no datetime field, just a description
+ */
 public class Todo extends Task {
     public Todo(String description) {
         super(description);
