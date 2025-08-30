@@ -1,6 +1,7 @@
 package penguin;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Parser {
     public enum TaskType {
@@ -28,7 +29,7 @@ public class Parser {
             ui.sayGoodbye();
             return false;
         } else if (str.equals("list")) {
-            ui.printList(tasks.getTasks());
+            ui.printList(tasks.getTasks(), "Here are the tasks in your list:");
         } else if (str.contains("mark") || str.contains("unmark")) {
             String[] split = str.split(" ");
             int idx = Integer.parseInt(split[1]) - 1;
@@ -46,6 +47,10 @@ public class Parser {
             int idx = Integer.parseInt(split[1]) - 1;
             Task task = tasks.deleteTask(idx);
             ui.deleteTask(tasks.getNumOfTasks(), task);
+        } else if (str.contains("find")) {
+            String[] split = str.split(" ");
+            List<Task> filtered = tasks.findTasks(split[1]);
+            ui.printList(filtered, "Here are the matching tasks in your list:");
         } else {
             try {
                 String[] split = str.split(" ", 2);
