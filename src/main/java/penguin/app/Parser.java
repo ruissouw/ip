@@ -1,4 +1,4 @@
-package penguin;
+package penguin.app;
 
 import penguin.Tasks.Deadline;
 import penguin.Tasks.Event;

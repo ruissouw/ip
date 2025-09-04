@@ -1,4 +1,4 @@
-package penguin;
+package penguin.app;
 
 import penguin.Tasks.Task;
 

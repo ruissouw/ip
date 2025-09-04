@@ -1,4 +1,4 @@
-package penguin;
+package penguin.app;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
