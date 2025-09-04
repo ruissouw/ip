@@ -1,4 +1,6 @@
-package penguin;
+package penguin.app;
+
+import penguin.Tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;

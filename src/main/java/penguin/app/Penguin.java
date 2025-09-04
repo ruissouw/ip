@@ -1,4 +1,4 @@
-package penguin;
+package penguin.app;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,21 +33,11 @@ public class Penguin {
         }
     }
 
-    /**
-     * The main driver of the Penguin app
-     */
-    public void run() {
-        ui.sayWelcome();
-
-        boolean isOngoing = true;
-        while (isOngoing) {
-            String str = ui.readLine();
-            isOngoing = Parser.parse(str, tasks, ui, storage);
-        }
-        ui.close();
+    public String setUp() {
+        return ui.sayWelcome();
     }
 
-    public static void main(String[] args) {
-        new Penguin().run();
+    public String getResponse(String input) {
+        return Parser.parse(input, tasks, ui, storage);
     }
 }

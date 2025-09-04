@@ -1,4 +1,9 @@
-package penguin;
+package penguin.app;
+
+import penguin.Tasks.Deadline;
+import penguin.Tasks.Event;
+import penguin.Tasks.Task;
+import penguin.Tasks.Todo;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,17 +47,16 @@ public class Parser {
      * @param storage the Storage object
      * @return whether to exit the program
      */
-    public static boolean parse(String str, TaskList tasks, Ui ui, Storage storage) {
+    public static String parse(String str, TaskList tasks, Ui ui, Storage storage) {
         if (str.equals("bye")) {
             try {
                 storage.writeAllTasks(tasks.getTasks());
             } catch (IOException e) {
-                ui.printErrorMessage(e.getMessage());
+                return ui.printErrorMessage(e.getMessage());
             }
-            ui.sayGoodbye();
-            return false;
+            return ui.sayGoodbye();
         } else if (str.equals("list")) {
-            ui.printList(tasks.getTasks(), "Here are the tasks in your list:");
+            return ui.printList(tasks.getTasks(), "Here are the tasks in your list:");
         } else if (str.contains("mark") || str.contains("unmark")) {
             String[] split = str.split(" ");
             int idx = Integer.parseInt(split[1]) - 1;
@@ -60,20 +64,20 @@ public class Parser {
             String msg = "";
             if (split[0].equals("mark")) {
                 tasks.markAsDone(idx);
-                ui.markTask(tasks.getTask(idx));
+                return ui.markTask(tasks.getTask(idx));
             } else if (split[0].equals("unmark")) {
                 tasks.markAsUndone(idx);
-                ui.unmarkTask(tasks.getTask(idx));
+                return ui.unmarkTask(tasks.getTask(idx));
             }
         } else if (str.contains("delete")) {
             String[] split = str.split(" ");
             int idx = Integer.parseInt(split[1]) - 1;
             Task task = tasks.deleteTask(idx);
-            ui.deleteTask(tasks.getNumOfTasks(), task);
+            return ui.deleteTask(tasks.getNumOfTasks(), task);
         } else if (str.contains("find")) {
             String[] split = str.split(" ");
             List<Task> filtered = tasks.findTasks(split[1]);
-            ui.printList(filtered, "Here are the matching tasks in your list:");
+            return ui.printList(filtered, "Here are the matching tasks in your list:");
         } else {
             try {
                 String[] split = str.split(" ", 2);
@@ -104,11 +108,11 @@ public class Parser {
                     tasks.addTask(new Event(split3[0].trim(), split4[0].trim(), split4[1].trim()));
                     break;
                 }
-                ui.addTask(tasks.getNumOfTasks(), tasks.getTask(tasks.getNumOfTasks() - 1));
+                return ui.addTask(tasks.getNumOfTasks(), tasks.getTask(tasks.getNumOfTasks() - 1));
             } catch (PenguinException pe) {
-                ui.printErrorMessage(pe.toString());
+                return ui.printErrorMessage(pe.toString());
             }
         }
-        return true;
+        return "i dont understand ur input";
     }
 }

@@ -1,4 +1,4 @@
-package penguin;
+package penguin.app;
 
 public class PenguinException extends Exception {
     private final String errorType;

@@ -1,4 +1,9 @@
-package penguin;
+package penguin.app;
+
+import penguin.Tasks.Deadline;
+import penguin.Tasks.Event;
+import penguin.Tasks.Task;
+import penguin.Tasks.Todo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
