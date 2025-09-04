@@ -1,4 +1,4 @@
-package penguin;
+package penguin.gui;
 
 import javafx.application.Application;
 
