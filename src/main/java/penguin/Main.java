@@ -88,8 +88,8 @@ public class Main extends Application {
         String userText = userInput.getText();
         String dukeText = penguin.getResponse(userInput.getText());
         dialogContainer.getChildren().addAll(
-                new DialogBox(userText, userImage),
-                new DialogBox(dukeText, penguinImage)
+            DialogBox.getUserDialog(userText, userImage),
+            DialogBox.getPenguinDialog(dukeText, penguinImage)
         );
         userInput.clear();
     }
