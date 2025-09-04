@@ -43,7 +43,7 @@ test {
 }
 
 application {
-    mainClass.set("penguin.Launcher")
+    mainClass.set("penguin.gui.Launcher")
 }
 
 shadowJar {
