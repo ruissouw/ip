@@ -1,9 +1,9 @@
 package penguin.app;
 
-import penguin.Tasks.Task;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import penguin.tasks.Task;
 
 /**
  * The class that keeps track of the tasks in the list and performs operations
@@ -70,6 +70,10 @@ public class TaskList {
         tasks.get(idx).markAsUndone();
     }
 
+    /**
+     * @param keyword keyword to search for
+     * @return list of tasks containing keyword
+     */
     public List<Task> findTasks(String keyword) {
         ArrayList<Task> filtered = new ArrayList<>();
         for (Task task : tasks) {

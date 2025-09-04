@@ -1,10 +1,5 @@
 package penguin.app;
 
-import penguin.Tasks.Deadline;
-import penguin.Tasks.Event;
-import penguin.Tasks.Task;
-import penguin.Tasks.Todo;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -12,6 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import penguin.tasks.Deadline;
+import penguin.tasks.Event;
+import penguin.tasks.Task;
+import penguin.tasks.Todo;
 
 /**
  * Class in charge of reading and writing file data

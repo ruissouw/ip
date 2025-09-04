@@ -1,12 +1,12 @@
 package penguin.app;
 
-import penguin.Tasks.Deadline;
-import penguin.Tasks.Event;
-import penguin.Tasks.Task;
-import penguin.Tasks.Todo;
-
 import java.io.IOException;
 import java.util.List;
+
+import penguin.tasks.Deadline;
+import penguin.tasks.Event;
+import penguin.tasks.Task;
+import penguin.tasks.Todo;
 
 /**
  * Interprets and processes user commands
@@ -107,6 +107,9 @@ public class Parser {
                     String[] split4 = split3[1].split("/to", 2);
                     tasks.addTask(new Event(split3[0].trim(), split4[0].trim(), split4[1].trim()));
                     break;
+
+                default:
+                    throw new PenguinException("Unknown task type: " + taskType);
                 }
                 return ui.addTask(tasks.getNumOfTasks(), tasks.getTask(tasks.getNumOfTasks() - 1));
             } catch (PenguinException pe) {
