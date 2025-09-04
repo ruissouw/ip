@@ -1,10 +1,12 @@
 package penguin;
-import org.junit.jupiter.api.Test;
-import penguin.Tasks.Task;
-import penguin.app.TaskList;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import penguin.tasks.Task;
+import penguin.app.TaskList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

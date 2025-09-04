@@ -1,6 +1,8 @@
 package penguin;
+
 import org.junit.jupiter.api.Test;
-import penguin.Tasks.Task;
+
+import penguin.tasks.Task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

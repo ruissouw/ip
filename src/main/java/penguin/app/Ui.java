@@ -1,9 +1,9 @@
 package penguin.app;
 
-import penguin.Tasks.Task;
-
 import java.util.List;
 import java.util.Scanner;
+
+import penguin.tasks.Task;
 
 /**
  * The class in charge of dealing with user interactions
@@ -73,8 +73,8 @@ public class Ui {
      * @return String saying which task was marked
      */
     public String markTask(Task task) {
-        return "Nice! I've marked this task as done:" + "\n" +
-                String.format("%s %s", task.getStatusIcon(), task.getDescription());
+        return "Nice! I've marked this task as done:" + "\n"
+                + String.format("%s %s", task.getStatusIcon(), task.getDescription());
     }
 
     /**
@@ -83,8 +83,8 @@ public class Ui {
      * @return String saying which task was marked
      */
     public String unmarkTask(Task task) {
-        return "OK, I've marked this task as not done yet:" + "\n" +
-                String.format("%s %s", task.getStatusIcon(), task.getDescription());
+        return "OK, I've marked this task as not done yet:" + "\n"
+                + String.format("%s %s", task.getStatusIcon(), task.getDescription());
     }
 
     /**
@@ -93,8 +93,8 @@ public class Ui {
      * @param totalTasks Number of tasks left in the list
      */
     public String deleteTask(int totalTasks, Task task) {
-        return "Noted. I've removed this task:" + "\n" + task +
-                "Now you have " + totalTasks + " tasks in the list.";
+        return "Noted. I've removed this task:" + "\n" + task
+                + "Now you have " + totalTasks + " tasks in the list.";
     }
 
     /**
@@ -103,8 +103,8 @@ public class Ui {
      * @param task Task to be added
      */
     public String addTask(int totalTasks, Task task) {
-        return "Got it. I've added this task:\n" + task + "\n" +
-                    "Now you have " + totalTasks + " tasks in the list.";
+        return "Got it. I've added this task:\n" + task + "\n"
+                + "Now you have " + totalTasks + " tasks in the list.";
     }
 
     /**
