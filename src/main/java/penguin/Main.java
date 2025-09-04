@@ -21,6 +21,7 @@ public class Main extends Application {
     private Scene scene;
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image penguinImage = new Image(this.getClass().getResourceAsStream("/images/DaPenguin.jpeg"));
+    private Penguin penguin = new Penguin();
 
     @Override
     public void start(Stage stage) {
@@ -84,9 +85,15 @@ public class Main extends Application {
     }
 
     private void handleUserInput() {
-        dialogContainer.getChildren().addAll(new DialogBox(userInput.getText(), userImage));
+        String userText = userInput.getText();
+        String dukeText = penguin.getResponse(userInput.getText());
+        dialogContainer.getChildren().addAll(
+                new DialogBox(userText, userImage),
+                new DialogBox(dukeText, penguinImage)
+        );
         userInput.clear();
     }
+
 }
 
 

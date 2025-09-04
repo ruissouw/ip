@@ -50,4 +50,8 @@ public class Penguin {
     public static void main(String[] args) {
         new Penguin().run();
     }
+
+    public String getResponse(String input) {
+        return "Penguin heard: " + input;
+    }
 }
