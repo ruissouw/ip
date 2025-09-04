@@ -1,5 +1,7 @@
 package penguin;
 import org.junit.jupiter.api.Test;
+import penguin.Tasks.Task;
+import penguin.app.TaskList;
 
 import java.util.ArrayList;
 import java.util.List;

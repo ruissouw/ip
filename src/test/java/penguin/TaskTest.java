@@ -1,5 +1,7 @@
 package penguin;
 import org.junit.jupiter.api.Test;
+import penguin.Tasks.Task;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskTest {
