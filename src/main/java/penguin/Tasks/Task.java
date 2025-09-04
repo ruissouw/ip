@@ -1,4 +1,4 @@
-package penguin;
+package penguin.Tasks;
 
 /**
  * A task has a description and a status reflecting on whether it is completed

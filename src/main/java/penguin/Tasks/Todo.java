@@ -1,4 +1,4 @@
-package penguin;
+package penguin.Tasks;
 
 /**
  * The most basic task with no datetime field, just a description

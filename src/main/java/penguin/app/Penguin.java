@@ -33,25 +33,11 @@ public class Penguin {
         }
     }
 
-    /**
-     * The main driver of the Penguin app
-     */
-    public void run() {
-        ui.sayWelcome();
-
-        boolean isOngoing = true;
-        while (isOngoing) {
-            String str = ui.readLine();
-            isOngoing = Parser.parse(str, tasks, ui, storage);
-        }
-        ui.close();
-    }
-
-    public static void main(String[] args) {
-        new Penguin().run();
+    public String setUp() {
+        return ui.sayWelcome();
     }
 
     public String getResponse(String input) {
-        return "Penguin heard: " + input;
+        return Parser.parse(input, tasks, ui, storage);
     }
 }
