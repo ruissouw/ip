@@ -73,13 +73,14 @@ public class Parser {
             return ui.printList(tasks.getTasks(), PRINT_ALL_TASKS_MESSAGE);
         } else if (str.contains(MARK_COMMAND) || str.contains(UNMARK_COMMAND)) {
             String[] split = str.split(" ");
+            String command = split[0];
             int idx = Integer.parseInt(split[1]) - 1;
 
             String msg = "";
-            if (split[0].equals(MARK_COMMAND)) {
+            if (command.equals(MARK_COMMAND)) {
                 tasks.markAsDone(idx);
                 return ui.markTask(tasks.getTask(idx));
-            } else if (split[0].equals(UNMARK_COMMAND)) {
+            } else if (command.equals(UNMARK_COMMAND)) {
                 tasks.markAsUndone(idx);
                 return ui.unmarkTask(tasks.getTask(idx));
             }
@@ -96,30 +97,36 @@ public class Parser {
             try {
                 String[] split = str.split(" ", 2);
                 TaskType taskType = TaskType.convert(split[0]);
+                String taskName = split[1].trim();
 
                 switch (taskType) {
                 case TODO:
-                    if (split.length == 1 || split[1].trim().isEmpty()) {
+                    if (split.length == 1 || taskName.isEmpty()) {
                         throw new PenguinException(TODO);
                     }
-                    tasks.addTask(new Todo(split[1].trim()));
+                    tasks.addTask(new Todo(taskName));
                     break;
 
                 case DEADLINE:
-                    if (split.length == 1 || split[1].trim().isEmpty()) {
+                    if (split.length == 1 || taskName.isEmpty()) {
                         throw new PenguinException(DEADLINE);
                     }
-                    String[] split2 = split[1].split("/by", 2);
-                    tasks.addTask(new Deadline(split2[0].trim(), split2[1].trim()));
+                    String[] split2 = taskName.split("/by", 2);
+                    String description = split2[0].trim();
+                    String deadline = split2[1].trim();
+                    tasks.addTask(new Deadline(description, deadline));
                     break;
 
                 case EVENT:
-                    if (split.length == 1 || split[1].trim().isEmpty()) {
+                    if (split.length == 1 || taskName.isEmpty()) {
                         throw new PenguinException(EVENT);
                     }
-                    String[] split3 = split[1].split("/from", 2);
-                    String[] split4 = split3[1].split("/to", 2);
-                    tasks.addTask(new Event(split3[0].trim(), split4[0].trim(), split4[1].trim()));
+                    String[] nameAndDates = taskName.split("/from", 2);
+                    String name = nameAndDates[0].trim();
+                    String[] toAndFrom = nameAndDates[1].split("/to", 2);
+                    String to = toAndFrom[0].trim();
+                    String from = toAndFrom[1].trim();
+                    tasks.addTask(new Event(name, to, from));
                     break;
 
                 default:
