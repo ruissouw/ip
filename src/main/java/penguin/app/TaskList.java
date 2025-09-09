@@ -1,9 +1,14 @@
 package penguin.app;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import penguin.tasks.Deadline;
+import penguin.tasks.Event;
 import penguin.tasks.Task;
+import penguin.tasks.Todo;
 
 /**
  * The class that keeps track of the tasks in the list and performs operations
@@ -82,5 +87,42 @@ public class TaskList {
             }
         }
         return filtered;
+    }
+
+    /**
+     * @param isAscending whether earliest tasks first
+     * @return list of tasks arranged by date
+     */
+    public List<Task> sortTasksByDate(boolean isAscending) {
+        // Add todos to the front first
+        List<Task> result = this.tasks.stream()
+                .filter(task -> task instanceof Todo)
+                .collect(Collectors.toList());
+
+        List<Task> timedTasks = this.tasks.stream()
+                .filter(task -> !(task instanceof Todo))
+                .collect(Collectors.toList());
+
+        // Sort timed tasks
+        Comparator<Task> comparator = Comparator.comparing(task -> {
+            if (task instanceof Deadline) {
+                return ((Deadline) task).getDeadline();
+            } else if (task instanceof Event) {
+                return ((Event) task).getStart();
+            } else {
+                return null;
+            }
+        });
+
+        // Reverse order for descending
+        if (!isAscending) {
+            comparator = comparator.reversed();
+        }
+
+        timedTasks.sort(comparator);
+
+        // Append timed tasks to todos
+        result.addAll(timedTasks);
+        return result;
     }
 }
