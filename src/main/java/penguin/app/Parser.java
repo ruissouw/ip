@@ -60,6 +60,7 @@ public class Parser {
         } else if (str.contains("mark") || str.contains("unmark")) {
             String[] split = str.split(" ");
             int idx = Integer.parseInt(split[1]) - 1;
+            assert idx > 0 : "idx cannot be less than 0";
 
             String msg = "";
             if (split[0].equals("mark")) {
@@ -72,6 +73,7 @@ public class Parser {
         } else if (str.contains("delete")) {
             String[] split = str.split(" ");
             int idx = Integer.parseInt(split[1]) - 1;
+            assert idx > 0 : "idx cannot be less than 0";
             Task task = tasks.deleteTask(idx);
             return ui.deleteTask(tasks.getNumOfTasks(), task);
         } else if (str.contains("find")) {
