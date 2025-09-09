@@ -93,6 +93,9 @@ public class Ui {
      * @param totalTasks Number of tasks left in the list
      */
     public String deleteTask(int totalTasks, Task task) {
+        assert task != null : "task should not be null";
+        assert totalTasks >= 0 : "totalTasks should not be negative";
+
         return "Noted. I've removed this task:" + "\n" + task
                 + "Now you have " + totalTasks + " tasks in the list.";
     }
@@ -103,6 +106,9 @@ public class Ui {
      * @param task Task to be added
      */
     public String addTask(int totalTasks, Task task) {
+        assert task != null : "task should not be null";
+        assert totalTasks >= 0 : "totalTasks should not be negative";
+
         return "Got it. I've added this task:\n" + task + "\n"
                 + "Now you have " + totalTasks + " tasks in the list.";
     }
