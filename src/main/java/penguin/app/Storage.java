@@ -54,6 +54,7 @@ public class Storage {
             } else if (split[0].equals("E")) {
                 task = new Event(split[2], split[3], split[4]);
             }
+            assert task != null : "task should not be null";
 
             if (split[1].equals("[X]") && task != null) {
                 task.markAsDone();
@@ -81,6 +82,8 @@ public class Storage {
                 line = "E | " + task.getStatusIcon() + " | " + task.getDescription()
                         + " | " + ((Event) task).getStart() + " | " + ((Event) task).getEnd();
             }
+            assert line != null : "line should not be null";
+
             fw.write(line + System.lineSeparator());
         }
         fw.close();
