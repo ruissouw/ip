@@ -48,36 +48,50 @@ public class Parser {
      * @return whether to exit the program
      */
     public static String parse(String str, TaskList tasks, Ui ui, Storage storage) {
-        if (str.equals("bye")) {
+        final String BYE_COMMAND = "bye";
+        final String LIST_COMMAND = "list";
+        final String MARK_COMMAND = "mark";
+        final String UNMARK_COMMAND = "unmark";
+        final String DELETE_COMMAND = "delete";
+        final String FIND_COMMAND = "find";
+        final String PRINT_ALL_TASKS_MESSAGE = "Here are the tasks in your list:";
+        final String PRINT_MATCHING_TASKS_MESSAGE = "Here are the matching tasks in your list:";
+        final String TODO = "todo";
+        final String DEADLINE = "deadline";
+        final String EVENT = "event";
+        final String UNKNOWN_TASK_TYPE = "Unknown task type: ";
+        final String DONT_UNDERSTAND = "i dont understand ur input";
+
+        if (str.equals(BYE_COMMAND)) {
             try {
                 storage.writeAllTasks(tasks.getTasks());
             } catch (IOException e) {
                 return ui.printErrorMessage(e.getMessage());
             }
             return ui.sayGoodbye();
-        } else if (str.equals("list")) {
-            return ui.printList(tasks.getTasks(), "Here are the tasks in your list:");
-        } else if (str.contains("mark") || str.contains("unmark")) {
+        } else if (str.equals(LIST_COMMAND)) {
+            return ui.printList(tasks.getTasks(), PRINT_ALL_TASKS_MESSAGE);
+        } else if (str.contains(MARK_COMMAND) || str.contains(UNMARK_COMMAND)) {
             String[] split = str.split(" ");
             int idx = Integer.parseInt(split[1]) - 1;
 
             String msg = "";
-            if (split[0].equals("mark")) {
+            if (split[0].equals(MARK_COMMAND)) {
                 tasks.markAsDone(idx);
                 return ui.markTask(tasks.getTask(idx));
-            } else if (split[0].equals("unmark")) {
+            } else if (split[0].equals(UNMARK_COMMAND)) {
                 tasks.markAsUndone(idx);
                 return ui.unmarkTask(tasks.getTask(idx));
             }
-        } else if (str.contains("delete")) {
+        } else if (str.contains(DELETE_COMMAND)) {
             String[] split = str.split(" ");
             int idx = Integer.parseInt(split[1]) - 1;
             Task task = tasks.deleteTask(idx);
             return ui.deleteTask(tasks.getNumOfTasks(), task);
-        } else if (str.contains("find")) {
+        } else if (str.contains(FIND_COMMAND)) {
             String[] split = str.split(" ");
             List<Task> filtered = tasks.findTasks(split[1]);
-            return ui.printList(filtered, "Here are the matching tasks in your list:");
+            return ui.printList(filtered, PRINT_MATCHING_TASKS_MESSAGE);
         } else {
             try {
                 String[] split = str.split(" ", 2);
@@ -86,14 +100,14 @@ public class Parser {
                 switch (taskType) {
                 case TODO:
                     if (split.length == 1 || split[1].trim().isEmpty()) {
-                        throw new PenguinException("todo");
+                        throw new PenguinException(TODO);
                     }
                     tasks.addTask(new Todo(split[1].trim()));
                     break;
 
                 case DEADLINE:
                     if (split.length == 1 || split[1].trim().isEmpty()) {
-                        throw new PenguinException("deadline");
+                        throw new PenguinException(DEADLINE);
                     }
                     String[] split2 = split[1].split("/by", 2);
                     tasks.addTask(new Deadline(split2[0].trim(), split2[1].trim()));
@@ -101,7 +115,7 @@ public class Parser {
 
                 case EVENT:
                     if (split.length == 1 || split[1].trim().isEmpty()) {
-                        throw new PenguinException("event");
+                        throw new PenguinException(EVENT);
                     }
                     String[] split3 = split[1].split("/from", 2);
                     String[] split4 = split3[1].split("/to", 2);
@@ -109,13 +123,13 @@ public class Parser {
                     break;
 
                 default:
-                    throw new PenguinException("Unknown task type: " + taskType);
+                    throw new PenguinException(UNKNOWN_TASK_TYPE + taskType);
                 }
                 return ui.addTask(tasks.getNumOfTasks(), tasks.getTask(tasks.getNumOfTasks() - 1));
             } catch (PenguinException pe) {
                 return ui.printErrorMessage(pe.toString());
             }
         }
-        return "i dont understand ur input";
+        return DONT_UNDERSTAND;
     }
 }
