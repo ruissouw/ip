@@ -61,6 +61,12 @@ public class Parser {
         final String EVENT = "event";
         final String UNKNOWN_TASK_TYPE = "Unknown task type: ";
         final String DONT_UNDERSTAND = "i dont understand ur input";
+        final String SORT_BY_DATE_ASCENDING = "sort by date ascending";
+        final String SORT_BY_DATE_DESCENDING = "sort by date descending";
+        final String PRINT_SORTED_ASCENDING_MESSAGE = "Here are the tasks in your list, " +
+                "sorted in ascending order:";
+        final String PRINT_SORTED_DESCENDING_MESSAGE = "Here are the tasks in your list, " +
+                "sorted in descending order:";
 
         if (str.equals(BYE_COMMAND)) {
             try {
@@ -95,6 +101,12 @@ public class Parser {
             String[] split = str.split(" ");
             List<Task> filtered = tasks.findTasks(split[1]);
             return ui.printList(filtered, PRINT_MATCHING_TASKS_MESSAGE);
+        } else if (str.equals(SORT_BY_DATE_ASCENDING)) {
+            List<Task> sorted = tasks.sortTasksByDate(true);
+            return ui.printList(sorted, PRINT_SORTED_ASCENDING_MESSAGE);
+        } else if (str.equals(SORT_BY_DATE_DESCENDING)) {
+            List<Task> sorted = tasks.sortTasksByDate(false);
+            return ui.printList(sorted, PRINT_SORTED_DESCENDING_MESSAGE);
         } else {
             try {
                 String[] split = str.split(" ", 2);
