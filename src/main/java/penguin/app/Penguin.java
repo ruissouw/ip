@@ -14,23 +14,31 @@ public class Penguin {
     private static TaskList tasks;
     private static Ui ui;
     private static Storage storage;
+    private static final String FILE_CREATION_ERROR = "Unable to create file: ";
+
+    private TaskList loadTasks() {
+        try {
+            return new TaskList(storage.load());
+        } catch (FileNotFoundException e) {
+            return handleMissingFile();
+        }
+    }
+
+    private TaskList handleMissingFile() {
+        try {
+            storage.createFolder();
+            storage.createFile();
+            return new TaskList(new ArrayList<>());
+        } catch (IOException io) {
+            ui.printErrorMessage(FILE_CREATION_ERROR + io.getMessage());
+            return new TaskList(new ArrayList<>());
+        }
+    }
 
     public Penguin() {
         ui = new Ui();
         storage = new Storage();
-
-        try {
-            tasks = new TaskList(storage.load());
-        } catch (FileNotFoundException e) {
-            storage.createFolder();
-            try {
-                storage.createFile();
-                tasks = new TaskList(new ArrayList<>());
-            } catch (IOException io) {
-                ui.printErrorMessage("Unable to create file: " + io.getMessage());
-                tasks = new TaskList(new ArrayList<>());
-            }
-        }
+        tasks = loadTasks();
     }
 
     public String setUp() {
